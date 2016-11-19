@@ -13,6 +13,11 @@ ls -l /usr/local/factorio
 bin=/usr/local/factorio/bin/x64/factorio
 
 savename=/usr/local/factorio/saves/$NAME.zip
+SETTINGS=/usr/local/factorio/saves/$NAME.settings.json
+
+if [ ! -f $SETTINGS ]; then
+    cp -av /usr/local/factorio/saves/{default,$NAME}.settings.json
+fi
 
 if [ -f "$savename" ]; then
     echo "Save $savename already exists, skipping creation..."
@@ -29,4 +34,4 @@ ls -lt /usr/local/factorio/saves
 
 echo "Starting..."
 set -x
-$bin --start-server $NAME
+$bin --start-server $NAME --server-settings $SETTINGS
